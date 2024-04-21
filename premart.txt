@@ -1,0 +1,186 @@
+
+
+    import numpy as np
+    import pandas as pd
+    import seaborn as sns
+    from scipy import stats
+    import matplotlib.pyplot as plt
+
+Reliance_Mart_Data
+
+    Reliance_Mart_Data = pd.read_excel('RelianceDataMart.xlsx')
+
+    Reliance_Mart_Data.head()
+
+       Rice_Bag_Weight
+    0             24.5
+    1             24.7
+    2             25.6
+    3             25.0
+    4             24.7
+
+    Reliance_Mart_Data.shape
+
+    (29, 1)
+
+    Reliance_Mart_Data.describe()
+
+           Rice_Bag_Weight
+    count        29.000000
+    mean         24.446207
+    std           0.569463
+    min          23.300000
+    25%          24.100000
+    50%          24.500000
+    75%          24.900000
+    max          25.600000
+
+    one_sample_result= stats.ttest_1samp(Reliance_Mart_Data, 24.235)
+
+    one_sample_result
+
+    TtestResult(statistic=array([1.99729036]), pvalue=array([0.05559509]), df=array([28]))
+
+    #Ttest_1sampResult(statistic=array([1.99729036]), pvalue=array([0.05559509]))
+
+Pre_Post_Score
+
+    pre_post_score=pd.read_excel('Pre_Post_Score.xlsx')
+
+    pre_post_score.shape
+
+    (23, 7)
+
+    pre_post_score.head(5)
+
+       Pre_Score Post_Score  Diff  Unnamed: 3  Unnamed: 4 Unnamed: 5  Unnamed: 6
+    0       18.0         22  -4.0         NaN         NaN        NaN         NaN
+    1       21.0         25  -4.0         NaN         NaN        NaN         NaN
+    2       16.0         17  -1.0         NaN         NaN        NaN         NaN
+    3       22.0         24  -2.0         NaN         NaN        NaN         NaN
+    4       19.0         16   3.0         NaN         NaN        NaN         NaN
+
+    pre_post_score.isnull().sum()
+
+    Pre_Score      3
+    Post_Score     0
+    Diff           0
+    Unnamed: 3    23
+    Unnamed: 4    23
+    Unnamed: 5    22
+    Unnamed: 6    22
+    dtype: int64
+
+    pre_post_score = pre_post_score.drop(['Unnamed: 3','Unnamed: 4','Unnamed: 5','Unnamed: 6'],axis='columns')
+
+    pre_post_score = pre_post_score.dropna(axis=0)
+
+    pre_post_score.isnull().sum()
+
+    Pre_Score     0
+    Post_Score    0
+    Diff          0
+    dtype: int64
+
+    pre_post_score
+
+        Pre_Score Post_Score  Diff
+    0        18.0         22  -4.0
+    1        21.0         25  -4.0
+    2        16.0         17  -1.0
+    3        22.0         24  -2.0
+    4        19.0         16   3.0
+    5        24.0         29  -5.0
+    6        17.0         20  -3.0
+    7        21.0         23  -2.0
+    8        23.0         19   4.0
+    9        18.0         20  -2.0
+    10       14.0         15  -1.0
+    11       16.0         15   1.0
+    12       16.0         18  -2.0
+    13       19.0         26  -7.0
+    14       18.0         18   0.0
+    15       20.0         24  -4.0
+    16       12.0         18  -6.0
+    17       22.0         25  -3.0
+    18       15.0         19  -4.0
+    19       17.0         16   1.0
+
+    two_sample_result = stats.ttest_rel(a = pre_post_score ["Pre_Score"],b = pre_post_score ["Post_Score"])
+
+    two_sample_result
+
+    TtestResult(statistic=-3.231252665580312, pvalue=0.004394965993185664, df=19)
+
+Crocin_Data_ST
+
+    crocin_data=pd.read_excel('Crocin_Data_ST.xlsx')
+
+    crocin_data.head()
+
+       Before_Crocin After_Crocin  diff  Unnamed: 3 Unnamed: 4  Unnamed: 5
+    0          101.0           99   2.0         NaN        NaN         NaN
+    1           99.0           98   1.0         NaN        NaN         NaN
+    2          101.0           97   4.0         NaN        NaN         NaN
+    3           99.9           99   0.9         NaN        NaN         NaN
+    4           99.8           98   1.8         NaN        NaN         NaN
+
+    crocin_data.isnull().sum()
+
+    Before_Crocin     3
+    After_Crocin      0
+    diff              0
+    Unnamed: 3       32
+    Unnamed: 4       31
+    Unnamed: 5       31
+    dtype: int64
+
+    crocin_data = crocin_data.drop(['Unnamed: 3','Unnamed: 4','Unnamed: 5'],axis='columns')
+
+    crocin_data = crocin_data.dropna(axis=0)
+
+    crocin_data.isnull().sum()
+
+    Before_Crocin    0
+    After_Crocin     0
+    diff             0
+    dtype: int64
+
+    crocin_data
+
+        Before_Crocin After_Crocin  diff
+    0           101.0           99   2.0
+    1            99.0           98   1.0
+    2           101.0           97   4.0
+    3            99.9           99   0.9
+    4            99.8           98   1.8
+    5            98.0           97   1.0
+    6            97.0           99  -2.0
+    7           101.0           98   3.0
+    8           102.0           96   6.0
+    9           103.0           98   5.0
+    10           99.0           94   5.0
+    11           99.9           96   3.9
+    12           99.8           97   2.8
+    13           99.7           99   0.7
+    14          101.1           98   3.1
+    15          102.3           97   5.3
+    16          101.0           99   2.0
+    17           99.0           98   1.0
+    18          101.0           97   4.0
+    19           99.9           99   0.9
+    20           99.8           98   1.8
+    21           98.0           96   2.0
+    22           97.0           97   0.0
+    23          101.0           99   2.0
+    24          102.0           97   5.0
+    25          103.0           99   4.0
+    26           99.0           98   1.0
+    27           99.9           97   2.9
+    28           99.8           99   0.8
+
+    two_sample_result=stats.ttest_rel(crocin_data ['Before_Crocin'], crocin_data['After_Crocin'])
+
+    two_sample_result
+
+    TtestResult(statistic=7.071712959273876, pvalue=1.0800112658101922e-07, df=28)

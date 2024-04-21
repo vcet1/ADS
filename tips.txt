@@ -1,0 +1,170 @@
+
+
+    import numpy as np
+    import pandas as pd
+    import seaborn as sns
+    from scipy import stats
+    import matplotlib.pyplot as plt
+    from sklearn.preprocessing import LabelEncoder
+
+    tip = pd.read_csv('/content/tips-expt4.csv')
+
+    tip.head()
+
+    {"summary":"{\n  \"name\": \"tip\",\n  \"rows\": 244,\n  \"fields\": [\n    {\n      \"column\": \"total_bill\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 8.902411954856856,\n        \"min\": 3.07,\n        \"max\": 50.81,\n        \"num_unique_values\": 229,\n        \"samples\": [\n          22.12,\n          20.23,\n          14.78\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"tip\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.3836381890011822,\n        \"min\": 1.0,\n        \"max\": 10.0,\n        \"num_unique_values\": 123,\n        \"samples\": [\n          3.35,\n          1.5,\n          6.73\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"sex\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Male\",\n          \"Female\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"smoker\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Yes\",\n          \"No\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"day\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 4,\n        \"samples\": [\n          \"Sat\",\n          \"Fri\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"time\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Lunch\",\n          \"Dinner\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"size\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 1,\n        \"max\": 6,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          2,\n          3\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tip"}
+
+    tip.isnull().sum()
+
+    total_bill    0
+    tip           0
+    sex           0
+    smoker        0
+    day           0
+    time          0
+    size          0
+    dtype: int64
+
+#1.FREQUNCY DISTRIBITION
+
+    tip['sex'].value_counts()
+
+    Male      157
+    Female     87
+    Name: sex, dtype: int64
+
+    sns.countplot(tip,x='sex')
+
+    <Axes: xlabel='sex', ylabel='count'>
+
+[]
+
+    sns.countplot(tip,x='sex',hue='smoker')
+
+    <Axes: xlabel='sex', ylabel='count'>
+
+[]
+
+    sns.countplot(tip,x='day',color='grey')
+
+    <Axes: xlabel='day', ylabel='count'>
+
+[]
+
+    sns.catplot(tip,x='day',hue='sex',kind='count',color='pink')
+
+    <seaborn.axisgrid.FacetGrid at 0x7d67d9cd64d0>
+
+[]
+
+#2.Numerical Value
+
+    sns.distplot(tip['tip'])
+
+    <Axes: xlabel='tip', ylabel='Density'>
+
+[]
+
+    sns.distplot(tip.tip,kde=False)
+
+    <Axes: xlabel='tip'>
+
+[]
+
+    plt.figure(figsize=(15,3))
+    sns.boxplot(x='total_bill',data= tip,color='g')
+
+    <Axes: xlabel='total_bill'>
+
+[]
+
+    plt.figure(figsize=(15,3))
+    sns.boxplot(x='tip',data= tip)
+
+    <Axes: xlabel='tip'>
+
+[]
+
+    tip
+
+    {"summary":"{\n  \"name\": \"tip\",\n  \"rows\": 244,\n  \"fields\": [\n    {\n      \"column\": \"total_bill\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 8.902411954856856,\n        \"min\": 3.07,\n        \"max\": 50.81,\n        \"num_unique_values\": 229,\n        \"samples\": [\n          22.12,\n          20.23,\n          14.78\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"tip\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.3836381890011822,\n        \"min\": 1.0,\n        \"max\": 10.0,\n        \"num_unique_values\": 123,\n        \"samples\": [\n          3.35,\n          1.5,\n          6.73\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"sex\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Male\",\n          \"Female\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"smoker\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Yes\",\n          \"No\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"day\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 4,\n        \"samples\": [\n          \"Sat\",\n          \"Fri\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"time\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Lunch\",\n          \"Dinner\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"size\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 1,\n        \"max\": 6,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          2,\n          3\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tip"}
+
+    bill_tips = pd.DataFrame(tip,columns=['total_bill','tip','size'])
+
+    bill_tips
+
+    {"summary":"{\n  \"name\": \"bill_tips\",\n  \"rows\": 244,\n  \"fields\": [\n    {\n      \"column\": \"total_bill\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 8.902411954856856,\n        \"min\": 3.07,\n        \"max\": 50.81,\n        \"num_unique_values\": 229,\n        \"samples\": [\n          22.12,\n          20.23,\n          14.78\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"tip\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.3836381890011822,\n        \"min\": 1.0,\n        \"max\": 10.0,\n        \"num_unique_values\": 123,\n        \"samples\": [\n          3.35,\n          1.5,\n          6.73\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"size\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 1,\n        \"max\": 6,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          2,\n          3,\n          5\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"bill_tips"}
+
+    print("IQR FOR TOTAL BILL : ",stats.iqr(bill_tips['total_bill']))
+    print("IQR FOR TIPS : ",stats.iqr(bill_tips['tip']))
+
+    IQR FOR TOTAL BILL :  10.779999999999998
+    IQR FOR TIPS :  1.5625
+
+    sns.relplot(x='total_bill',y='tip',data=tip,col='time',hue='smoker',size='size')
+
+    <seaborn.axisgrid.FacetGrid at 0x7d67d8ec3730>
+
+[]
+
+    sns.scatterplot(data=tip,x='total_bill',y='tip',hue='sex')
+
+    <Axes: xlabel='total_bill', ylabel='tip'>
+
+[]
+
+    sns.lmplot(x='total_bill',y='tip',data=tip,col='time',hue='smoker')
+
+    <seaborn.axisgrid.FacetGrid at 0x7d67d8e3b610>
+
+[]
+
+    sns.catplot(x='day',y='tip',data=tip,kind='swarm',palette='muted')
+
+    <seaborn.axisgrid.FacetGrid at 0x7d67d8dcbd60>
+
+[]
+
+    sns.catplot(x='time',y='tip',data=tip,height=6,kind='bar',palette='muted')
+
+    <seaborn.axisgrid.FacetGrid at 0x7d67d8bd6f20>
+
+[]
+
+    sns.catplot(x='day',y='tip',data=tip,kind='violin',palette='muted')
+
+    <seaborn.axisgrid.FacetGrid at 0x7d67d8c72440>
+
+[]
+
+    sns.pairplot(data=tip,hue='sex')
+
+    <seaborn.axisgrid.PairGrid at 0x7d67d8dcadd0>
+
+[]
+
+    corr_matrix = tip.corr()
+    ax = sns.heatmap(data=corr_matrix,annot=True,vmax=1,vmin=-1,center=0)
+    bottom,top = ax.get_ylim()
+    ax.set_ylim(bottom+0.5,top-0.5)
+
+    (3.5, -0.5)
+
+[]
+
+    LE = LabelEncoder()
+    tip['sex'] = LE.fit_transform(tip['sex'])
+    tip['smoker'] = LE.fit_transform(tip['smoker'])
+    tip['day'] = LE.fit_transform(tip['day'])
+    tip['time'] = LE.fit_transform(tip['time'])
+    tip.head()
+
+    {"summary":"{\n  \"name\": \"tip\",\n  \"rows\": 244,\n  \"fields\": [\n    {\n      \"column\": \"total_bill\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 8.902411954856856,\n        \"min\": 3.07,\n        \"max\": 50.81,\n        \"num_unique_values\": 229,\n        \"samples\": [\n          22.12,\n          20.23,\n          14.78\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"tip\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.3836381890011822,\n        \"min\": 1.0,\n        \"max\": 10.0,\n        \"num_unique_values\": 123,\n        \"samples\": [\n          3.35,\n          1.5,\n          6.73\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"sex\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 0,\n        \"max\": 1,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          1,\n          0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"smoker\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 0,\n        \"max\": 1,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          1,\n          0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"day\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 0,\n        \"max\": 3,\n        \"num_unique_values\": 4,\n        \"samples\": [\n          1,\n          0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"time\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 0,\n        \"max\": 1,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          1,\n          0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"size\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 1,\n        \"max\": 6,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          2,\n          3\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tip"}
+
+    corr_matrix = tip.corr()
+    ax = sns.heatmap(data=corr_matrix,annot=True,vmax=1,vmin=-1,center=0)
+    bottom,top = ax.get_ylim()
+    ax.set_ylim(bottom+0.5,top-0.5)
+
+    (7.5, -0.5)
+
+[]
